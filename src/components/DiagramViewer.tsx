@@ -42,8 +42,10 @@ function readUiScale(): number {
   return Number.isFinite(n) && n > 0 ? n : 1
 }
 
-export function DiagramViewer({ src, title = 'CLASSIFIED FIGURE' }: Props) {
+export function DiagramViewer({ src, title = 'CLASSIFIED DIAGRAM' }: Props) {
   const [broken, setBroken] = useState(false)
+  /** Base `<img>` finished load — defer lit duplicate to avoid parallel decode of the same huge PNG. */
+  const [baseDecoded, setBaseDecoded] = useState(false)
   const frameRef = useRef<HTMLDivElement>(null)
   const staticCanvasRef = useRef<HTMLCanvasElement>(null)
   const staticLoopRef = useRef<number>(0)
@@ -58,6 +60,16 @@ export function DiagramViewer({ src, title = 'CLASSIFIED FIGURE' }: Props) {
     prefersReducedMotion() ? 'live' : 'idle',
   )
   const stampedRef = useRef(false)
+
+  useEffect(() => {
+    setBroken(false)
+    setBaseDecoded(false)
+    setIntro(prefersReducedMotion() ? 'ready' : 'static')
+    setSpotlightStage(prefersReducedMotion() ? 'live' : 'idle')
+    setSpotPx(null)
+    stampedRef.current = false
+    playedRef.current = false
+  }, [src])
 
   /** Map viewport coords to overlay-local px (same box as `.diagram__spotlight` inset:0). */
   const syncSpotFromClient = useCallback((clientX: number, clientY: number) => {
@@ -226,6 +238,12 @@ export function DiagramViewer({ src, title = 'CLASSIFIED FIGURE' }: Props) {
       intro === 'fadeToBlack' ||
       (intro === 'ready' && !prefersReducedMotion() && spotlightStage === 'idle'))
 
+  /** Lit duplicate decodes after base (saves memory); reduced-motion skips idle so show lit immediately. */
+  const showLitDuplicate =
+    intro === 'ready' &&
+    (prefersReducedMotion() || baseDecoded) &&
+    (spotlightStage === 'radiusGrow' || spotlightStage === 'live')
+
   const frameClass =
     `diagram__frame diagram__frame--reveal${intro === 'ready' ? ' diagram__frame--reveal-ready' : ''}`
 
@@ -252,32 +270,42 @@ export function DiagramViewer({ src, title = 'CLASSIFIED FIGURE' }: Props) {
       >
         {broken ? (
           <p className="diagram__missing">
-            Missing asset. Add your PNG to <code>public/mission/diagram.png</code> and rebuild.
+            Could not load diagram at <code>{src}</code>. Add <code>public/mission/diagram.png</code>, commit,
+            redeploy, and hard-refresh. If the URL works in a new tab but fails here, the PNG may be too large for
+            this device to decode — try exporting under ~2000px wide.
           </p>
         ) : (
           <>
             <img
+              key={`diagram-base:${src}`}
               src={src}
               alt=""
+              decoding="async"
               aria-hidden={isLayoutOnlyBase ? true : undefined}
               className={`diagram__img diagram__img--full ${isLayoutOnlyBase ? 'diagram__img--layout-sizer' : 'diagram__img--dim'}`}
+              onLoad={() => setBaseDecoded(true)}
               onError={() => {
                 setBroken(true)
                 setIntro('ready')
               }}
               draggable={false}
             />
-            {intro === 'ready' &&
-              (spotlightStage === 'radiusGrow' || spotlightStage === 'live') && (
+            {showLitDuplicate && (
                 <div
                   className={`diagram__img-lit-shell ${spotlightStage === 'radiusGrow' ? 'diagram__spotlight--grow' : ''}`}
                   style={spotlightStyle}
                   aria-hidden
                 >
                   <img
+                    key={`diagram-lit:${src}`}
                     src={src}
                     alt=""
+                    decoding="async"
                     className="diagram__img-lit-inner"
+                    onError={() => {
+                      setBroken(true)
+                      setIntro('ready')
+                    }}
                     draggable={false}
                   />
                 </div>
