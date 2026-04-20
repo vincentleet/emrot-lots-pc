@@ -5,5 +5,5 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(({ command }) => ({
   plugins: [react()],
   // GitHub Pages serves project sites under /<repo-name>/.
-  base: command === 'build' ? '/em/' : '/',
+  base: command === 'build' ? '/emrot-lots-pc/' : '/',
 }))
