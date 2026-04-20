@@ -3,7 +3,7 @@
  *
  * VITE_LOGIN_PASSWORD — session login (default dieanotherday)
  * VITE_SECURE_CHANNELS — three comma-separated integers 0–9 for the secure-channel dials (e.g. 7,2,4)
- * VITE_DIAGRAM_PATH — path under public/ (default /mission/diagram.png)
+ * VITE_DIAGRAM_PATH — path under public/ (default mission/diagram.png); prepends Vite base for GitHub Pages
  * VITE_WAKE_SKIPS_BOOT — "true" = standby wakes straight to login
  * VITE_RESET_TARGET — standby | boot | login | main (where staff reset lands)
  * VITE_STAFF_PIN — optional; if set, staff must enter PIN after five rapid clock clicks before reset runs
@@ -62,12 +62,23 @@ function envCryptoRotateMinutes(): number {
   return Math.max(1, Math.min(120, n))
 }
 
+/** Public asset URL; respects `base` (e.g. /emrot-lots-pc/ on GitHub Pages). */
+function diagramPublicUrl(): string {
+  const fallback = 'mission/diagram.png'
+  const raw = String(import.meta.env.VITE_DIAGRAM_PATH ?? '').trim()
+  const candidate = raw === '' ? fallback : raw
+  if (/^https?:\/\//i.test(candidate)) return candidate
+  const base = import.meta.env.BASE_URL
+  const path = candidate.replace(/^\/+/, '')
+  return `${base}${path}`
+}
+
 export function getMissionConfig() {
   return {
     loginPassword: envLoginPassword(),
     wakeKey: envWakeKey(),
     secureChannels: parseSecureChannels(import.meta.env.VITE_SECURE_CHANNELS),
-    diagramPath: import.meta.env.VITE_DIAGRAM_PATH ?? '/mission/diagram.png',
+    diagramPath: diagramPublicUrl(),
     wakeSkipsBoot: import.meta.env.VITE_WAKE_SKIPS_BOOT === 'true',
     resetTarget: parseResetTarget(import.meta.env.VITE_RESET_TARGET),
     staffPin: (import.meta.env.VITE_STAFF_PIN ?? '').trim(),
