@@ -133,10 +133,10 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   max-width: 44rem;
-  color: #001d06;
+  color: var(--phosphor);
   text-shadow:
-    0 0 10px rgba(120, 255, 160, 0.28),
-    0 0 1px rgba(0, 0, 0, 0.85);
+    0 0 10px var(--phosphor-glow),
+    0 0 1px rgba(0, 0, 0, 0.9);
 }
 
 @keyframes resetStaticSweep {
