@@ -57,7 +57,7 @@ export default function App() {
                 role="dialog"
                 aria-label="Staff PIN"
               >
-                <p>Staff override — resets Agent E03 station</p>
+                <p>Staff override — resets E03&apos;s Second Lake station</p>
                 <input
                   className="staff-pin__input"
                   type="password"

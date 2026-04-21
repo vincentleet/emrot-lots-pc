@@ -17,7 +17,7 @@ export function StandbyScreen({ wakeKey }: Props) {
         <span className="blink">TO WAKE E03&apos;S MACHINE</span>
       </p>
       <p className="standby__sub">
-        E03&apos;s field kit — last personnel fix unknown. Other keys ignored.
+        E03&apos;s Second Lake terminal — last personnel fix unknown. Other keys ignored.
       </p>
       <div className="standby__pulse" aria-hidden />
     </div>

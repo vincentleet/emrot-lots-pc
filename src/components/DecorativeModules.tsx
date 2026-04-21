@@ -1069,9 +1069,9 @@ export function DecorativeHeader({
     <div className="deco-header">
       <div className="deco-header__brand">
         <span className="deco-header__glyph">◆</span>
-        <span>AGENT E03 · FIELD TERMINAL</span>
+        <span>AGENT E03 · SECOND LAKE TERMINAL</span>
         <span className="deco-header__sep">//</span>
-        <span className="deco-header__node">ASSIGNED E03</span>
+        <span className="deco-header__node">SITE SECOND LAKE</span>
       </div>
       <div className="deco-header__meta">
         <span className={`deco-header__badge deco-header__badge--${phase}`}>
@@ -1099,8 +1099,8 @@ export function DecorativeHeader({
 export function DecorativeTicker({ phase }: { phase: Phase }) {
   const msg =
     phase === 'classified'
-      ? 'E03 VAULT UNLOCKED // AGENT E03 EYES ONLY // VERIFY PHYSICAL HANDLING // '
-      : 'NO NETWORK EGRESS // AGENT E03 ISSUED HARDWARE // E03 WHEREABOUTS UNRESOLVED // FIELD OPS AUTHORIZATION ONLY // '
+      ? 'E03 VAULT UNLOCKED // SECOND LAKE SITE // AGENT E03 EYES ONLY // VERIFY PHYSICAL HANDLING // '
+      : 'NO NETWORK EGRESS // SECOND LAKE SITE // GEO COVER ROTORUA // AGENT E03 ISSUED HARDWARE // E03 WHEREABOUTS UNRESOLVED // OPS AUTHORIZATION ONLY // '
 
   return (
     <div className="ticker" role="presentation">

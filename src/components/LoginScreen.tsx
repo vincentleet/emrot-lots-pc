@@ -46,9 +46,9 @@ export function LoginScreen({ expectedPassword, onSuccess }: Props) {
 
   return (
     <div className="login">
-      <h1 className="login__title">AGENT E03 · SECURE SESSION</h1>
+      <h1 className="login__title">AGENT E03 · SECOND LAKE SESSION</h1>
       <p className="login__sub">
-        Enter E03&apos;s network passphrase.
+        Enter E03&apos;s network passphrase (Second Lake terminal).
         <span className="login__sub-note">
           Ops note: no current beacon on E03 — location unresolved on all nets.
         </span>

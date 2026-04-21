@@ -93,9 +93,10 @@ export function GateMiniGame({ target, onSolved }: Props) {
     <div className="gate">
       <h2 className="gate__title">E03 MODULE — SECURE CHANNEL</h2>
       <p className="gate__copy">
-        Agent E03&apos;s uplink: align digits with the broadcast schedule from
-        the field kit. E03 is not on voice or data — position unknown — so you
-        are matching the schedule cold. Range 0–9 per channel. Each attempt
+        Agent E03&apos;s uplink from Second Lake: align digits with the broadcast
+        schedule from this terminal. E03 is not on voice or data — position
+        unknown — so you are matching the schedule cold. Range 0–9 per channel.
+        Each attempt
         returns a signal scan: how many channels match, overall coherence, and
         whether each channel needs a higher or lower digit.
       </p>

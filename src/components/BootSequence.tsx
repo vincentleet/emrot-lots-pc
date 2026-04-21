@@ -4,10 +4,10 @@ const LINES = [
   '[ OK ] MEMORY CHECK — 640K ALLOCATED',
   '[ OK ] SECURE STORE — READ/WRITE',
   '[ OK ] AGENT E03 SECURE NODE — HANDSHAKE PENDING',
-  '[ .. ] LOADING E03 FIELD MANUAL…………… DONE',
+  '[ .. ] LOADING E03 · SECOND LAKE OPS MANUAL…………… DONE',
   '[ OK ] DISPLAY SUBSYSTEM — 72% SIGNAL',
   '[ !! ] E03 LOCATOR — NO FIX · WHEREABOUTS UNKNOWN',
-  'TERMINAL ID  E03-FLD-01  //  CLASSIFIED',
+  'TERMINAL ID  E03-SLK-01 · SECOND LAKE  //  CLASSIFIED',
   'AWAITING AGENT E03 CREDENTIALS —',
 ] as const
 
@@ -26,7 +26,7 @@ function LoadingBootLine({ pct }: { pct: number }) {
   const dots = '.'.repeat(dotCount)
   return (
     <>
-      [ .. ] LOADING E03 FIELD MANUAL{dotCount > 0 ? ` ${dots} ` : ' '}
+      [ .. ] LOADING E03 · SECOND LAKE OPS MANUAL{dotCount > 0 ? ` ${dots} ` : ' '}
       {pct}%
     </>
   )
@@ -94,7 +94,7 @@ export function BootSequence({ onComplete }: Props) {
 
   return (
     <div className="boot">
-      <pre className="boot__header">AGENT E03 · APARTMENT COMPUTER v3.1 — BIOS</pre>
+      <pre className="boot__header">AGENT E03 · SECOND LAKE WORKSTATION v3.1 — BIOS</pre>
       <ul className="boot__lines">
         {LINES.slice(0, phaseLoading ? LOADING_LINE_INDEX : shown).map((line, i) => (
           <li key={i}>{line}</li>
