@@ -127,7 +127,11 @@ export default function App() {
             className={`reset-notice${resetNoticeFading ? ' reset-notice--fade-out' : ''}`}
             aria-live="polite"
           >
-            <p>Legacy of the Spy terminal has now been reset.</p>
+            <p>
+              LEGACY OF THE SPY TERMINAL
+              <br />
+              HAS NOW BEEN RESET.
+            </p>
           </section>
         )}
         <TerminalFrame
