@@ -59,6 +59,35 @@ body {
   animation: flicker 4s infinite;
 }
 
+.reset-notice {
+  position: fixed;
+  inset: 0;
+  z-index: 240;
+  min-height: calc(100vh / var(--ui-scale));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: #39ff14;
+  color: #041003;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+.reset-notice--fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.reset-notice p {
+  margin: 0;
+  font-size: clamp(1rem, 2.1vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-shadow: none;
+}
+
 @keyframes flicker {
   0%,
   100% {
