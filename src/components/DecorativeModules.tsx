@@ -348,7 +348,8 @@ export function ModuleSecurity({ phase }: { phase: Phase }) {
         suffix={phase === 'classified' ? 'vault' : 'sig'}
       />
       <div className="module-block module-block--tight">
-        <KvRow k="POLICY" v="RX-7749-A" />
+        <KvRow k="E03 LOC" v="NO FIX" dim />
+        <KvRow k="POLICY" v="E03-CLEARED" />
         <KvRow k="HMAC" v="SHA-256" />
         <KvRow k="NONCE" v={`0x${nonce.toString(16).toUpperCase().padStart(8, '0')}`} />
         <KvRow k="TTL" v={`${ttl}`} />
@@ -1059,18 +1060,18 @@ export function DecorativeHeader({
         : phase === 'login'
           ? 'AUTH GATE'
           : phase === 'main'
-            ? 'SECURE DESKTOP'
-            : phase === 'classified'
-              ? 'VAULT CHANNEL'
+          ? 'E03 DESKTOP'
+          : phase === 'classified'
+              ? 'E03 VAULT'
               : ''
 
   return (
     <div className="deco-header">
       <div className="deco-header__brand">
         <span className="deco-header__glyph">◆</span>
-        <span>FIELD OPS TERMINAL</span>
+        <span>AGENT E03 · FIELD TERMINAL</span>
         <span className="deco-header__sep">//</span>
-        <span className="deco-header__node">NODE RX-7749</span>
+        <span className="deco-header__node">ASSIGNED E03</span>
       </div>
       <div className="deco-header__meta">
         <span className={`deco-header__badge deco-header__badge--${phase}`}>
@@ -1098,8 +1099,8 @@ export function DecorativeHeader({
 export function DecorativeTicker({ phase }: { phase: Phase }) {
   const msg =
     phase === 'classified'
-      ? 'VAULT ASSET UNLOCKED // VERIFY PHYSICAL HANDLING // NO EXTERNAL INTERFACE // '
-      : 'NO NETWORK EGRESS // AIR-GAPPED INSTANCE // AUTHORIZED OPERATORS ONLY // '
+      ? 'E03 VAULT UNLOCKED // AGENT E03 EYES ONLY // VERIFY PHYSICAL HANDLING // '
+      : 'NO NETWORK EGRESS // AGENT E03 ISSUED HARDWARE // E03 WHEREABOUTS UNRESOLVED // FIELD OPS AUTHORIZATION ONLY // '
 
   return (
     <div className="ticker" role="presentation">

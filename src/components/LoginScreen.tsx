@@ -39,15 +39,20 @@ export function LoginScreen({ expectedPassword, onSuccess }: Props) {
       onSuccess()
     } else {
       terminalAudio.playError()
-      setError('ACCESS DENIED — INVALID CREDENTIAL')
+      setError("ACCESS DENIED — NOT E03'S CREDENTIAL")
       setValue('')
     }
   }
 
   return (
     <div className="login">
-      <h1 className="login__title">SECURE SESSION</h1>
-      <p className="login__sub">Enter network passphrase</p>
+      <h1 className="login__title">AGENT E03 · SECURE SESSION</h1>
+      <p className="login__sub">
+        Enter E03&apos;s network passphrase.
+        <span className="login__sub-note">
+          Ops note: no current beacon on E03 — location unresolved on all nets.
+        </span>
+      </p>
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -62,7 +67,7 @@ export function LoginScreen({ expectedPassword, onSuccess }: Props) {
             id={id}
             className="login__input"
             type={showPassphrase ? 'text' : 'password'}
-            name="covert-passphrase"
+            name="e03-passphrase"
             autoComplete="new-password"
             autoCapitalize="off"
             autoCorrect="off"

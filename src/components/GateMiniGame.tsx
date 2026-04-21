@@ -85,18 +85,19 @@ export function GateMiniGame({ target, onSolved }: Props) {
       terminalAudio.playError()
       setFeedback(getChannelFeedback(cur, target))
       setFeedbackStale(false)
-      setMsg('HANDSHAKE FAILED — ANALYSIS BELOW')
+      setMsg('E03 HANDSHAKE FAILED — ANALYSIS BELOW')
     }
   }
 
   return (
     <div className="gate">
-      <h2 className="gate__title">MODULE — SECURE CHANNEL</h2>
+      <h2 className="gate__title">E03 MODULE — SECURE CHANNEL</h2>
       <p className="gate__copy">
-        Align uplink digits with the broadcast schedule recovered in the field.
-        Range 0–9 per channel. Each uplink attempt returns a signal scan: how
-        many channels match, overall coherence, and whether each channel needs
-        a higher or lower digit.
+        Agent E03&apos;s uplink: align digits with the broadcast schedule from
+        the field kit. E03 is not on voice or data — position unknown — so you
+        are matching the schedule cold. Range 0–9 per channel. Each attempt
+        returns a signal scan: how many channels match, overall coherence, and
+        whether each channel needs a higher or lower digit.
       </p>
       <div className="gate__dials">
         <ChannelDial label="CHANNEL A" value={a} idx={0} onBump={bump} />
@@ -170,7 +171,7 @@ export function GateMiniGame({ target, onSolved }: Props) {
       )}
 
       <button type="button" className="btn gate__verify" onClick={verify}>
-        ESTABLISH UPLINK
+        ESTABLISH E03 UPLINK
       </button>
     </div>
   )

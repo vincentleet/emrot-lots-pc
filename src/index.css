@@ -1065,6 +1065,14 @@ body {
   color: var(--phosphor-dim);
 }
 
+.login__sub-note {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  opacity: 0.92;
+}
+
 .login__pass-wrap {
   display: flex;
   gap: 0.5rem;

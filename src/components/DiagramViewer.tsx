@@ -42,7 +42,7 @@ function readUiScale(): number {
   return Number.isFinite(n) && n > 0 ? n : 1
 }
 
-export function DiagramViewer({ src, title = 'CLASSIFIED DIAGRAM' }: Props) {
+export function DiagramViewer({ src, title = 'AGENT E03 · CLASSIFIED DIAGRAM' }: Props) {
   const [broken, setBroken] = useState(false)
   /** Base `<img>` finished load — defer lit duplicate to avoid parallel decode of the same huge PNG. */
   const [baseDecoded, setBaseDecoded] = useState(false)
@@ -264,8 +264,8 @@ export function DiagramViewer({ src, title = 'CLASSIFIED DIAGRAM' }: Props) {
         role="region"
         aria-label={
           intro === 'ready'
-            ? 'Classified diagram; move the pointer — the scan circle stays bright, edges dim'
-            : 'Establishing secure video channel'
+            ? 'E03 classified diagram; move the pointer — the scan circle stays bright, edges dim'
+            : 'Establishing E03 secure video channel'
         }
       >
         {broken ? (

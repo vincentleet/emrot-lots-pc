@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react'
 const LINES = [
   '[ OK ] MEMORY CHECK — 640K ALLOCATED',
   '[ OK ] SECURE STORE — READ/WRITE',
-  '[ OK ] COVERT NODE — HANDSHAKE PENDING',
-  '[ .. ] LOADING FIELD MANUAL…………… DONE',
+  '[ OK ] AGENT E03 SECURE NODE — HANDSHAKE PENDING',
+  '[ .. ] LOADING E03 FIELD MANUAL…………… DONE',
   '[ OK ] DISPLAY SUBSYSTEM — 72% SIGNAL',
-  'TERMINAL ID  RX-7749-DELTA  //  CLASSIFIED',
-  'AWAITING OPERATOR CREDENTIALS —',
+  '[ !! ] E03 LOCATOR — NO FIX · WHEREABOUTS UNKNOWN',
+  'TERMINAL ID  E03-FLD-01  //  CLASSIFIED',
+  'AWAITING AGENT E03 CREDENTIALS —',
 ] as const
 
 const LOADING_LINE_INDEX = 3
@@ -25,7 +26,7 @@ function LoadingBootLine({ pct }: { pct: number }) {
   const dots = '.'.repeat(dotCount)
   return (
     <>
-      [ .. ] LOADING FIELD MANUAL{dotCount > 0 ? ` ${dots} ` : ' '}
+      [ .. ] LOADING E03 FIELD MANUAL{dotCount > 0 ? ` ${dots} ` : ' '}
       {pct}%
     </>
   )
@@ -93,7 +94,7 @@ export function BootSequence({ onComplete }: Props) {
 
   return (
     <div className="boot">
-      <pre className="boot__header">COVERT TERMINAL v3.1 — BIOS</pre>
+      <pre className="boot__header">AGENT E03 · APARTMENT COMPUTER v3.1 — BIOS</pre>
       <ul className="boot__lines">
         {LINES.slice(0, phaseLoading ? LOADING_LINE_INDEX : shown).map((line, i) => (
           <li key={i}>{line}</li>
