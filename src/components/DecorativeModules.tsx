@@ -620,26 +620,26 @@ const TERRAIN_VALLEY_PATH =
 const TERRAIN_ROUTE_D =
   'M 18 60 L 42 49 L 64 57 L 88 46 L 104 42'
 
+const TRACE_WAYPOINTS: readonly [number, number][] = [
+  [18, 60],
+  [42, 49],
+  [64, 57],
+  [88, 46],
+  [104, 42],
+]
+
 export function ModuleDiagramTerrainMap({ phase }: { phase: Phase }) {
   const active = phase !== 'standby'
   const gid = useId().replace(/:/g, '')
-  const [elvM, setElvM] = useState(287)
-  const [sats, setSats] = useState(12)
-  const [hdop, setHdop] = useState(0.82)
   const [bearing, setBearing] = useState(312)
   const [slopePct, setSlopePct] = useState(6.2)
-  const [vAccM, setVAccM] = useState(1.8)
 
   useEffect(() => {
     const id = window.setInterval(() => {
-      setElvM((v) => Math.min(310, Math.max(260, v + Math.floor((Math.random() - 0.5) * 5))))
-      setSats((s) => Math.min(14, Math.max(8, s + Math.floor((Math.random() - 0.45) * 2))))
-      setHdop((h) => Math.min(1.4, Math.max(0.45, +(h + (Math.random() - 0.5) * 0.06).toFixed(2))))
       setBearing((b) => (b + Math.floor((Math.random() - 0.5) * 4) + 360) % 360)
       setSlopePct((s) =>
         Math.min(11, Math.max(3.5, +(s + (Math.random() - 0.5) * 0.35).toFixed(1))),
       )
-      setVAccM((v) => Math.min(2.4, Math.max(1.1, +(v + (Math.random() - 0.5) * 0.1).toFixed(1))))
     }, 3600)
     return () => window.clearInterval(id)
   }, [])
@@ -651,23 +651,19 @@ export function ModuleDiagramTerrainMap({ phase }: { phase: Phase }) {
   const contourSpur = useMemo(() => [0, 4, 8], [])
   const contourValley = useMemo(() => [0, 2.5, 5], [])
 
-  const elvHi = elvM + 9
-  const elvLo = elvM - 14
-  const elvMid = elvM - 4
-
   return (
-    <ModulePanel title="TERRAIN OVERLAY" compact>
+    <ModulePanel title="COLD TRACE REPLAY" compact>
       <div className="module-block module-block--tight">
-        <KvRow k="GRID" v="S38°42′ E176°18′" />
-        <KvRow k="DATUM" v="NZGD2000 · NZTM" />
-        <KvRow k="DEM" v="10 m · bilinear" />
-        <KvRow k="ELV" v={`${elvM} m ASL`} />
-        <KvRow k="BRG" v={`${bearing}° mag`} />
-        <KvRow k="SLP" v={`${slopePct.toFixed(1)} %`} />
-        <KvRow k="HDOP" v={`${hdop.toFixed(2)} · σᵥ ${vAccM.toFixed(1)} m`} />
+        <KvRow k="SUBJECT" v="AGENT E03" />
+        <KvRow k="GRID" v="SECOND LAKE · NZTM" />
+        <KvRow k="BRG" v={`${bearing}° mag`} dim={!active} />
+        <KvRow k="CONF" v="STALE — NO LIVE FIX" dim />
+        <p className="diagram-mod__signal-stale" role="status">
+          LAST SIGNAL: 29 HOURS AGO
+        </p>
         <KvRow
           k="LOCK"
-          v={active ? `DGPS · ${sats} SV` : 'cold'}
+          v={active ? 'REPLAY TRACE' : 'STANDBY'}
           dim={!active}
         />
       </div>
@@ -820,95 +816,57 @@ export function ModuleDiagramTerrainMap({ phase }: { phase: Phase }) {
             />
           ))}
 
-          {/* Elevation callouts */}
-          <text
-            x="22"
-            y="19"
-            fill="rgba(180,255,200,0.65)"
-            fontSize="4.5"
-            fontFamily="inherit"
-          >
-            {elvHi}m
-          </text>
-          <text
-            x="48"
-            y="40"
-            fill="rgba(140,200,160,0.45)"
-            fontSize="4"
-            fontFamily="inherit"
-          >
-            {elvMid}m
-          </text>
-          <text
-            x="72"
-            y="58"
-            fill="rgba(120,180,140,0.4)"
-            fontSize="3.8"
-            fontFamily="inherit"
-          >
-            {elvLo}m
-          </text>
-
-          {/* Route + waypoints */}
+          {/* Breadcrumb trail (replay) */}
           <path
             d={TERRAIN_ROUTE_D}
             fill="none"
-            stroke="#ffcc33"
-            strokeWidth="0.65"
-            strokeDasharray="3.5 2"
+            stroke="rgba(180, 220, 160, 0.55)"
+            strokeWidth="0.55"
+            strokeDasharray="2.5 2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            opacity={active ? 0.82 : 0.22}
+            opacity={active ? 0.9 : 0.25}
           />
-          {[
-            [18, 60],
-            [42, 49],
-            [64, 57],
-            [88, 46],
-            [104, 42],
-          ].map(([cx, cy], i) => (
+          {TRACE_WAYPOINTS.slice(0, -1).map(([cx, cy], i) => (
             <circle
               key={`wp-${i}`}
               cx={cx}
               cy={cy}
-              r="1.6"
-              fill="#0a120c"
-              stroke="#ffcc44"
-              strokeWidth="0.55"
-              opacity={active ? 0.95 : 0.3}
+              r="1.15"
+              fill="rgba(8, 18, 12, 0.9)"
+              stroke="rgba(120, 200, 140, 0.65)"
+              strokeWidth="0.45"
+              opacity={active ? 0.88 : 0.28}
             />
           ))}
 
-          {/* Operator fix */}
-          <g opacity={active ? 1 : 0.35}>
-            <circle cx="78" cy="30" r="5" fill="none" stroke="#44ccff" strokeWidth="0.5" />
-            <circle cx="78" cy="30" r="3.2" fill="none" stroke="#44ccff" strokeWidth="0.85" />
-            <line
-              x1="78"
-              y1="24"
-              x2="78"
-              y2="36"
-              stroke="#66ddff"
-              strokeWidth="0.45"
-            />
-            <line
-              x1="72"
-              y1="30"
-              x2="84"
-              y2="30"
-              stroke="#66ddff"
-              strokeWidth="0.45"
+          {/* Last known ping — red, urgent */}
+          <g
+            className="diagram-mod__last-ping"
+            opacity={active ? 1 : 0.4}
+            transform={`translate(${TRACE_WAYPOINTS[4][0]}, ${TRACE_WAYPOINTS[4][1]})`}
+          >
+            <circle r="4.2" fill="none" stroke="#ff3333" strokeWidth="0.45" opacity="0.55" />
+            <circle r="2.8" fill="none" stroke="#ff5555" strokeWidth="0.55" opacity="0.75" />
+            <circle
+              className="diagram-mod__last-ping-core"
+              r="1.85"
+              fill="#ff2222"
+              stroke="#ff8888"
+              strokeWidth="0.35"
             />
           </g>
           <text
-            x="78"
-            y="24"
-            fill="rgba(120, 220, 255,0.85)"
-            fontSize="3.8"
+            x={TRACE_WAYPOINTS[4][0]}
+            y={TRACE_WAYPOINTS[4][1] - 7}
+            fill="rgba(255, 100, 100, 0.92)"
+            fontSize="3.6"
             fontFamily="inherit"
             textAnchor="middle"
+            className="diagram-mod__last-ping-label"
+            opacity={active ? 1 : 0.35}
           >
-            FIX
+            LAST PING
           </text>
 
           {/* North arrow */}
@@ -971,11 +929,11 @@ export function ModuleDiagramTerrainMap({ phase }: { phase: Phase }) {
             fontFamily="inherit"
             textAnchor="middle"
           >
-            CONTOUR 20 m · route · op fix
+            CONTOUR · replay trace · last ping
           </text>
         </svg>
         <div className="diagram-mod__caption diagram-mod__caption--terrain">
-          LIDAR FUSE · slope {slopePct.toFixed(1)}% · BRG {bearing}°
+          Fused plot · slope {slopePct.toFixed(1)}% · bearing {bearing}° · trace ends last confirmed cell
         </div>
       </div>
     </ModulePanel>

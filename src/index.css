@@ -803,6 +803,64 @@ body {
   line-height: 1.35;
 }
 
+.diagram-mod__signal-stale {
+  margin: 0.15rem 0 0.25rem;
+  padding: 0.2rem 0.35rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: #ff3b3b;
+  text-shadow: 0 0 10px rgba(255, 60, 60, 0.65);
+  border: 1px solid rgba(255, 80, 80, 0.42);
+  background: rgba(36, 6, 6, 0.5);
+  animation: diagramSignalStaleBlink 1s step-end infinite;
+}
+
+@keyframes diagramSignalStaleBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.36;
+  }
+}
+
+.diagram-mod__last-ping {
+  animation: diagramLastPingPulse 1.15s ease-in-out infinite;
+}
+
+.diagram-mod__last-ping-core {
+  animation: diagramLastPingCore 0.85s ease-in-out infinite;
+}
+
+.diagram-mod__last-ping-label {
+  animation: diagramSignalStaleBlink 1s step-end infinite;
+}
+
+@keyframes diagramLastPingPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.52;
+  }
+}
+
+@keyframes diagramLastPingCore {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.32;
+  }
+}
+
 .diagram-mod--spectral .diagram-mod__spectral-bars {
   flex: 0 0 auto;
   height: 52px;

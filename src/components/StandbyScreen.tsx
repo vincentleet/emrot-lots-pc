@@ -8,17 +8,15 @@ export function StandbyScreen({ wakeKey }: Props) {
 
   return (
     <div className="standby">
-      <pre className="standby__title">{'>'} AGENT E03 · STANDBY</pre>
+      <pre className="standby__title">{'>'} SECOND LAKE TERMINAL · STANDBY</pre>
       <p className="standby__hint">
         PRESS{' '}
         <kbd className="standby__key" translate="no">
           {letter}
         </kbd>{' '}
-        <span className="blink">TO WAKE E03&apos;S MACHINE</span>
+        <span className="blink">TO ACTIVATE TERMINAL</span>
       </p>
-      <p className="standby__sub">
-        E03&apos;s Second Lake terminal — last personnel fix unknown. Other keys ignored.
-      </p>
+      <p className="standby__sub">Mouse clicks and other keys will be ignored.</p>
       <div className="standby__pulse" aria-hidden />
     </div>
   )
